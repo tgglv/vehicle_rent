@@ -1,0 +1,46 @@
+<form>
+    <div class="form-group">
+        <label for="return-type">Тип ТС</label>
+        <select class="form-control" id="return-type">
+            <option value="-1">Не указан</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="return-vendor">Марка</label>
+        <select class="form-control" id="return-vendor">
+            <option value="-1">Не указана</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="return-vehicle-name">Модель</label>
+        <input type="text" class="form-control" id="return-vehicle-name" value="">
+    </div>
+    <div class="form-group">
+        <label for="return-license-plate">Регистрационный номер</label>
+        <input type="text" class="form-control" id="return-license-plate" value="">
+    </div>
+    <div class="form-group">
+        <label for="return-customer">Ф.И.О. Арендатора</label>
+        <input type="text" class="form-control" id="return-customer" value="">
+    </div>
+
+    <button type="button" class="btn btn-primary" onclick="findVehicleToReturn();">Найти ТС</button>
+    <button type="button" class="btn btn-light" onclick="clearFilterReturn();">Очистить</button>
+</form>
+
+<table class="table" style="display: none;" id="tbl-vehicles-to-return">
+    <thead>
+    <tr>
+        <th>Тип</th>
+        <th>Марка</th>
+        <th>Модель</th>
+        <th>Номер</th>
+        <th>Начало аренды</th>
+        <th>Ф.И.О.</th>
+        <th>Страна</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>

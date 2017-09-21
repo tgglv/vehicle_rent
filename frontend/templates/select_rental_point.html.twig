@@ -1,0 +1,80 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Выбрать пункт проката{% endblock %}
+{% block head %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="js/generic.js" ></script>
+    <script type="text/javascript" src="js/actions.js"></script>
+    <script>
+
+        window.onload = function () {
+            loadCountries('#country', '{{ country_id }}', function() {
+                // Пункты проката
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8000/rental_point/list',
+                    dataType: 'json',
+                    success: function (o) {
+                        var html = '';
+                        for (var countryId in o) {
+                            var points = o[countryId];
+                            html += '<optgroup label="' + countryList[countryId] + '" data-country-id="' + countryId + '">';
+                            for (var pointId in points) {
+                                var name = points[pointId];
+                                html += '<option value="' + pointId + '">' + name + '</option>';
+                            }
+                            html += '</optgroup>';
+                        }
+                        $('#point option').after(html);
+
+                        $('#point').val('{{ point_id }}');
+
+                        // скроем пункты проката пока не выбрана страна
+                        onRentalPointCountryChange();
+                    },
+                    error: function (o) {
+
+                    }
+                });
+            });
+        };
+
+        function onRentalPointCountryChange() {
+            var countryId = $('#country').val();
+            $('#point optgroup').each(function () {
+                if ($(this).data('countryId') != countryId) {
+                    $(this).hide();
+                }
+                if ($(this).data('countryId') == countryId) {
+                    $(this).show();
+                }
+            });
+        }
+
+    </script>
+{% endblock %}
+
+{% block content %}
+    {% if true == links_disabled %}
+        <div class="alert alert-secondary" role="alert">
+            Перед началом использования сервиса, пожалуйста, выберите страну и пункт проката
+        </div>
+    {% endif %}
+
+    <form>
+        <div class="form-group">
+            <label for="country">Страна</label>
+            <select class="form-control" id="country" onchange="onRentalPointCountryChange();">
+                <option value="-1">Не указана</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="point">Пункт проката</label>
+            <select class="form-control" id="point">
+                <option value="-1">Не указан</option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="onSetRentalPoint();">Выбрать</button>
+    </form>
+{% endblock %}

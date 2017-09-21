@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Выдать/Принять ТС{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <style>form {
+            margin-bottom: 20px;
+        }</style>
+    <script src="js/generic.js"></script>
+    <script src="js/actions.js"></script>
+    <script src="js/rent_return.js"></script>
+{% endblock %}
+{% block content %}
+
+    {# Menu #}
+    <div class="btn-group" role="group" aria-label="Выберите действие: выдать или принять ТС">
+        <button type="button" class="btn btn-primary" disabled onclick="onButtonSetRentClick(this);"
+                id="button-set-rent">
+            Выдать
+        </button>
+        <button type="button" class="btn btn-light" onclick="onButtonSetReturnClick()" id="button-set-return">
+            Принять
+        </button>
+    </div>
+
+    {# Rent #}
+    <div id="rent-vehicle-container">
+        {% include 'rent/select_vehicle.html.twig' %}
+        {% include 'rent/select_customer.html.twig' %}
+        {% include 'rent/confirm.html.twig' %}
+    </div>
+
+    {# Return #}
+    <div id="return-vehicle-container" style="display: none;">
+        {% include 'return/select_vehicle.html.twig' %}
+    </div>
+
+{% endblock %}

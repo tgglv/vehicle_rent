@@ -1,0 +1,49 @@
+<div id="confirm-rent-container" style="display: none;">
+
+    <div class="alert alert-success" role="alert">
+        Вы выбрали арендатора. Проверьте данные перед выдачей ТС в прокат.
+    </div>
+
+    <button type="button" class="btn btn-danger" onclick="returnToCustomerSelect();">Вернуться к выбору арендатора</button>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Пункт</th>
+            <th>Значение</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Тип ТС</td>
+            <td id="confirm-vehicle-type"></td>
+        </tr>
+        <tr>
+            <td>Производитель ТС</td>
+            <td id="confirm-vendor"></td>
+        </tr>
+        <tr>
+            <td>Модель</td>
+            <td id="confirm-vehicle"></td>
+        </tr>
+        <tr>
+            <td>Регистрационный Номер</td>
+            <td id="confirm-license-plate"></td>
+        </tr>
+        <tr>
+            <td>Клиент</td>
+            <td id="confirm-customer"></td>
+        </tr>
+        <tr>
+            <td>Страна</td>
+            <td id="confirm-customer-country"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form id="confirm-form">
+        <button type="button" class="btn btn-primary" onclick="finishVehicleRent();">Выдать ТС</button>
+        <button type="button" class="btn btn-light" onclick="returnToVehicleSelect();">Отмена</button>
+    </form>
+
+</div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">{% set ProjectName = "Аренда ТС" %}
+<head>
+    {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+              integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="css/sticky-footer.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+                integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+                integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+                crossorigin="anonymous"></script>
+
+
+
+        <title>{% block title %}{% endblock %} - {{ ProjectName }}</title>
+    {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd; margin-bottom: 20px;">
+    <ul class="nav nav-pills float-right">
+        {% for page, name in page_list %}
+            {#<span>page = {{ page }}, default_page = {{ default_page }}</span>#}
+            {% if (true == links_disabled) and (page != default_page ) %}
+                {% set href = "javascript:void(0);" %}
+            {% else %}
+                {% set href = "/" ~ page %}
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link{% if current_page == page %} active{% endif %}{% if (true == links_disabled) and (page != default_page) %} disabled{% endif %}"
+                                    href="{{ href }}">
+                    {{ name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
+
+<div class="container">
+    <input type="hidden" id="country_id" value="{{ country_id }}"/>
+    <input type="hidden" id="point_id" value="{{ point_id }}"/>
+
+    {% block content %}{% endblock %}
+
+    <br/>
+</div>
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">&copy; Copyright {{ "now"|date("Y") }} by Timur Gogolev</span>
+    </div>
+</footer>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="https://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<div id="history-find-vehicle-container">
+
+    <form>
+        <div class="form-group">
+            <label for="type">Тип ТС</label>
+            <select class="form-control" id="type">
+                <option value="-1">Не указан</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="vendor">Марка</label>
+            <select class="form-control" id="vendor">
+                <option value="-1">Не указана</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="license-plate">Регистрационный номер</label>
+            <input type="text" class="form-control" id="license-plate" value=""/>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="date-rent-from">Дата выдачи с</label>
+                <input id="date-rent-from" type="text" class="form-control date-picker" placeholder="">
+            </div>
+            <div class="col">
+                <label for="date-rent-to">по</label>
+                <input id="date-rent-to" type="text" class="form-control date-picker" placeholder="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="date-return-from">Дата возврата с</label>
+                <input id="date-return-from" type="text" class="form-control date-picker" placeholder="">
+            </div>
+            <div class="col">
+                <label for="date-return-to">по</label>
+                <input id="date-return-to" type="text" class="form-control date-picker" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="customer">Арендатор</label>
+            <input type="text" class="form-control" id="customer" value="" placeholder="Ф.И.О.">
+        </div>
+
+        {# TODO #}
+        <div class="form-group">
+            <label for="rent-point">Пункт выдачи ТС</label>
+            <select class="form-control" id="rent-point">
+                <option value="-1">Не указан</option>
+            </select>
+        </div>
+        {# TODO #}
+        <div class="form-group">
+            <label for="return-point">Пункт приёма ТС</label>
+            <select class="form-control" id="return-point">
+                <option value="-1">Не указан</option>
+            </select>
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="selectVehicleToHistoryView();">Найти</button>
+        <button type="button" class="btn btn-light" onclick="clearHistoryFilter();">Очистить</button>
+    </form>
+
+</div>
+
+<script type="text/javascript">
+    $('.date-picker').pickadate({format: 'yyyy-mm-dd'});
+</script>

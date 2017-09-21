@@ -1,0 +1,35 @@
+<div id="select-customer-container" style="display: none;">
+
+    <div class="alert alert-success" role="alert">
+        Вы выбрали автомобиль с указанными ниже характеристиками. Переходим к выбору арендатора.
+    </div>
+
+    <button type="button" class="btn btn-danger" onclick="returnToVehicleSelect();">Вернуться к выбору ТС</button>
+
+    <form>
+        <div class="form-group">
+            <label for="country">Страна</label>
+            <select class="form-control" id="country">
+                <option value="-1">Не указана</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="customer">Ф.И.О. Арендатора</label>
+            <input type="text" class="form-control" id="customer" value="" placeholder="Ф.И.О.">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="findRentVehicleCustomer();">Найти</button>
+        <button type="button" class="btn btn-light" onclick="clearFilterCustomerSelect();">Очистить</button>
+    </form>
+
+    <table class="table" style="display: none;" id="tbl-customers">
+        <thead>
+        <tr>
+            <th>Страна</th>
+            <th>Ф.И.О.</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>

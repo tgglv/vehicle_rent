@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}История проката ТС{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="css/picker/default.css">
+    <link rel="stylesheet" href="css/picker/default.date.css">
+    <script src="js/picker/picker.js"></script>
+    <script src="js/picker/picker.date.js"></script>
+    <script src="js/picker/ru_RU.js"></script>
+
+    <script src="js/generic.js"></script>
+    <script src="js/actions.js"></script>
+    <script src="js/history.js"></script>
+{% endblock %}
+{% block content %}
+
+    {% include 'history/select_vehicle.html.twig' %}
+    {% include 'history/show_vehicle_history.html.twig' %}
+
+{% endblock %}

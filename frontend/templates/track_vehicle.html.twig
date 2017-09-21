@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Отследить ТС{% endblock %}
+{% block head %}
+    {{ parent() }}
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=en_US" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+
+    <div id="map" style="width: 600px; height: 400px"></div>
+
+    <script src="http://api-maps.yandex.ru/1.1/index.xml?key=AFJPzkoBAAAA0wlkNQMAPICy9TNyocL5eQ8SocnlXToPI5wAAAAAAAAAAABBuPPUVxu_FmaVunDUUsLA8_Hv5Q=="
+            type="text/javascript"></script>
+    <script type="text/javascript">
+        var placeMark;
+        var map;
+        var line;
+
+        // TODO: раз в 10 секунд запрашиваем текущее положение машины, отрисовываем новую координату на карте
+
+        // TODO: вычислять положение цента на основе текущего положения ТС
+
+        window.onload = function () {
+            map = new YMaps.Map(document.getElementById("map"));
+            map.setCenter(new YMaps.GeoPoint(37.64, 55.76), 10);
+            placeMark = new YMaps.Placemark(new YMaps.GeoPoint(37.64, 55.76));
+            map.addOverlay(placeMark);
+            line = new YMaps.Polyline([new YMaps.GeoPoint(37.64, 55.76)], {geodesic: true});
+            map.addOverlay(line);
+            movePlacemark();
+        };
+
+        function movePlacemark() {
+            var pt = placeMark.getGeoPoint();
+            pt.setLng(pt.getLng() + (0.5 - Math.random()) / 10);
+            pt.setLat(pt.getLat() + (0.5 - Math.random()) / 10);
+            placeMark.setGeoPoint(pt);
+            line.addPoint(pt);
+            line.update();
+            map.panTo(pt);
+            setTimeout("movePlacemark();", 500);
+        }
+
+    </script>
+
+
+{% endblock %}
