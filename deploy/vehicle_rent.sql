@@ -100,7 +100,7 @@ CREATE TABLE `rental_point` (
 
 LOCK TABLES `rental_point` WRITE;
 /*!40000 ALTER TABLE `rental_point` DISABLE KEYS */;
-INSERT INTO `rental_point` VALUES (1,176,'Московский центр проката',55.794945,37.611427),(2,176,'Пермский центр проката',56.180870,57.980989),(3,205,'New York Rental Point',40.747865,-73.990619),(4,205,'LA Beverly Hills Rental Point',34.069277,-118.406260),(5,2,'Port Augusta Rental Point',-32.472566,137.746930);
+INSERT INTO `rental_point` VALUES (1,176,'Московский центр проката',55.794945,37.611427),(2,176,'Пермский центр проката',56.180870,57.980989),(3,176,'Нижегородский пункт проката',44.015128,56.285595),(4,176,'Ярославский пункт проката',39.8600128,57.585595),(5,176,'Казанский пункт проката',49.105128,55.815595);
 /*!40000 ALTER TABLE `rental_point` ENABLE KEYS */;
 UNLOCK TABLES;
 

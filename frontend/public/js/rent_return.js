@@ -88,7 +88,7 @@ function selectVehicleToRent(o) {
 function findRentVehicleCustomer() {
     $.ajax({
         type: 'GET',
-        url: getBaseUrl() + '/customer/list?country=' + getCountryIdFromSession() + '&customer=' + $('#customer').val(),
+        url: getBaseUrl() + '/customer/list?country=' + getCountryId() + '&customer=' + $('#customer').val(),
         dataType: 'json',
         success: function (o) {
             var html = "";
@@ -133,10 +133,10 @@ function finishVehicleRent() {
     if (confirm("Вы уверены в том что выдаёте ТС?")) {
         $.ajax({
             type: 'POST',
-            url: getBaseUrl() + '/rent_point/rent' + $.param({
+            url: getBaseUrl() + '/rent_point/rent?' + $.param({
                 point_id: getPointIdFromSession(),
-                vehicle: selectedVehicleId,
-                customer: selectedCustomerId
+                vehicle_id: selectedVehicleId,
+                customer_id: selectedCustomerId
             }),
             dataType: 'json',
             success: function (o, statusText, xhr) {
@@ -235,7 +235,7 @@ var finishVehicleReturn = function (o) {
 
         $.ajax({
             type: 'POST',
-            url: getBaseUrl() + '/vehicle/return' + $.param({
+            url: getBaseUrl() + '/vehicle/return?' + $.param({
                 point_id: getPointIdFromSession(),
                 rent_record_id: rentRecordId
             }),

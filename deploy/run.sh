@@ -14,7 +14,7 @@ sleep 10 && \
     mysql < /app/mysql_user.sql && \
     mysql < /app/vehicle_rent.sql
 
-redis-server &
+redis-server > /tmp/redis.log &
 
 # Имитация работы датчиков GPS в ТС
-php /app/vehicle_rent/frontend/cron/vehicleLocationsUpdater.php &
+php /app/vehicle_rent/frontend/cron/vehicleLocationsUpdater.php > /tmp/simulator.log &
