@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Статистика{% endblock %}
+{% block head %}
+    {{ parent() }}
+
+    <script src="js/common.js"></script>
+    <script src="js/statistics.js"></script>
+{% endblock %}
+{% block content %}
+
+    <form>
+        {% include 'components/select_rental_point_component.html.twig' %}
+        <button type="button" class="btn btn-primary" onclick="getStatistics();">Получить статистику</button>
+        <button type="button" class="btn btn-secondary" onclick="clearStatisticsFilter();">Очистить</button>
+    </form>
+
+    <label id="lbl-statistics-by-vehicle-type" for="tbl-statistics-by-vehicle-type"
+           style="display: none; padding-top: 20px;">Статистика по типу ТС</label>
+    <table class="table table-striped" style="display: none;" id="tbl-statistics-by-vehicle-type">
+        <thead>
+        <tr>
+            <th>Тип</th>
+            <th>Среднее время проката</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <label id="lbl-statistics-by-vehicle-type-and-vendor" for="tbl-statistics-by-vehicle-type-and-vendor"
+           style="display: none; padding-top: 20px;">Статистика по типу ТС и производителю</label>
+    <table class="table table-striped" style="display: none;" id="tbl-statistics-by-vehicle-type-and-vendor">
+        <thead>
+        <tr>
+            <th>Тип</th>
+            <th>Марка</th>
+            <th>Среднее время проката</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+{% endblock %}

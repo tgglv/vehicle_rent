@@ -4,9 +4,11 @@ const PAGE_RENT = 'rent_return_vehicle';
 const PAGE_SELECT_POINT = 'select_rental_point';
 const PAGE_TRACK = 'track_vehicle';
 
-const PAGE_POINTS = 'rental_points';
-const PAGE_VEHICLES = 'vehicles';
-const PAGE_CUSTOMERS = 'customers';
+// Страницы - справочники. Не успел реализовать
+//const PAGE_POINTS = 'rental_points';
+//const PAGE_VEHICLES = 'vehicles';
+//const PAGE_CUSTOMERS = 'customers';
+
 const PAGE_HISTORY = 'history';
 const PAGE_STATISTICS = 'statistics';
 
@@ -17,9 +19,9 @@ $app->get(
             PAGE_SELECT_POINT => 'Выбрать пункт',
             PAGE_RENT => 'Выдать/Принять ТС',
             PAGE_TRACK => 'Отследить ТС',
-            PAGE_POINTS => 'Пункты проката',
-            PAGE_VEHICLES => 'ТС',
-            PAGE_CUSTOMERS => 'Клиенты',
+//            PAGE_POINTS => 'Пункты проката',
+//            PAGE_VEHICLES => 'ТС',
+//            PAGE_CUSTOMERS => 'Клиенты',
             PAGE_HISTORY => 'История выдачи',
             PAGE_STATISTICS => 'Статистика',
         ];

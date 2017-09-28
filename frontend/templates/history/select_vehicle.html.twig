@@ -37,30 +37,45 @@
                 <input id="date-return-to" type="text" class="form-control date-picker" placeholder="">
             </div>
         </div>
-
         <div class="form-group">
             <label for="customer">Арендатор</label>
             <input type="text" class="form-control" id="customer" value="" placeholder="Ф.И.О.">
         </div>
-
-        {# TODO #}
         <div class="form-group">
             <label for="rent-point">Пункт выдачи ТС</label>
             <select class="form-control" id="rent-point">
                 <option value="-1">Не указан</option>
             </select>
         </div>
-        {# TODO #}
         <div class="form-group">
             <label for="return-point">Пункт приёма ТС</label>
             <select class="form-control" id="return-point">
                 <option value="-1">Не указан</option>
             </select>
         </div>
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" id="vehicle-in-rent-only"/>
+                Показать только ТС, которые в данный момент арендованы
+            </label>
+        </div>
 
-        <button type="button" class="btn btn-primary" onclick="selectVehicleToHistoryView();">Найти</button>
+        <button type="button" class="btn btn-primary" onclick="findVehicleToHistoryView();">Найти</button>
         <button type="button" class="btn btn-light" onclick="clearHistoryFilter();">Очистить</button>
     </form>
+
+    <table class="table table-striped" style="display: none;" id="tbl-vehicles-to-history-view">
+        <thead>
+        <tr>
+            <th>ТС</th>
+            <th>Арендатор</th>
+            <th>Выдача</th>
+            <th>Приём</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
 </div>
 

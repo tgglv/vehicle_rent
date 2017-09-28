@@ -4,6 +4,8 @@ var selectedVehicleId = null;
 var selectedCustomerId = null;
 var returnVehicleList = null;
 
+var findVehicleResultButtonCaption = 'Принять ТС';
+
 window.onload = function () {
     loadVehicleTypes('#type option, #return-type option');
     loadVendors('#vendor option, #return-vendor option');
@@ -12,18 +14,47 @@ window.onload = function () {
     });
 };
 
+function onButtonSetRentClick() {
+    $('#button-set-rent').prop("disabled", true)
+    $('#button-set-rent').removeClass("btn-light")
+    $('#button-set-rent').addClass("btn-primary");
+
+    $('#button-set-return').prop("disabled", false)
+    $('#button-set-return').removeClass("btn-primary")
+    $('#button-set-return').addClass("btn-light");
+
+    $('#return-vehicle-container').hide();
+    $('#rent-vehicle-container').show();
+}
+
+function onButtonSetReturnClick() {
+    $('#button-set-rent').prop("disabled", false);
+    $('#button-set-rent').removeClass("btn-primary");
+    $('#button-set-rent').addClass("btn-light");
+
+    $('#button-set-return').prop("disabled", true)
+    $('#button-set-return').removeClass("btn-light");
+    $('#button-set-return').addClass("btn-primary");
+
+    $('#rent-vehicle-container').hide();
+    $('#return-vehicle-container').show();
+}
+
 function findVehicleToRent() {
     var type = $('#type').val();
     var vendorId = $('#vendor').val();
 
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8000/rental_point/' + getPointId() + '/vehicle/list?type=' + type + '&vendor=' + vendorId,
+        url: getBaseUrl() + '/rent_point/vehicle/list?' + $.param({
+            point_id: getPointIdFromSession(),
+            type: type,
+            vendor: vendorId
+        }),
         dataType: 'json',
         success: function (o) {
             vehicleList = o;
             var html = "";
-            //{"2":{"license_plate":"D 345 EF","vehicle_type":"bike","vendor_name":"Honda","vehicle_name":"wave"}}
             for (var vehicleId in o) {
                 var vehicle = o[vehicleId];
                 html += '<tr data-id="' + vehicleId + '">' +
@@ -31,7 +62,8 @@ function findVehicleToRent() {
                     '<td>' + vehicle['vendor_name'] + '</td>' +
                     '<td>' + vehicle['vehicle_name'] + '</td>' +
                     '<th scope="row">' + vehicle['license_plate'] + '</th>' +
-                    '<td><button type="button" class="btn btn-success" data-vehicle-id="' + vehicleId + '" onclick="selectVehicleToRent(this);">Выбрать</button>' +
+                    '<td><button type="button" class="btn btn-success" data-vehicle-id="' + vehicleId +
+                    '" onclick="selectVehicleToRent(this);">Выбрать</button>' +
                     '</tr>';
             }
             if (html.length > 0) {
@@ -42,7 +74,8 @@ function findVehicleToRent() {
         error: function (o) {
 
         }
-    });
+    })
+    ;
 }
 
 function selectVehicleToRent(o) {
@@ -53,12 +86,9 @@ function selectVehicleToRent(o) {
 }
 
 function findRentVehicleCustomer() {
-    var countryId = $('#country').val();
-    var customer = $('#customer').val();
-
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8000/customer/list?country=' + countryId + '&customer=' + customer,
+        url: getBaseUrl() + '/customer/list?country=' + getCountryIdFromSession() + '&customer=' + $('#customer').val(),
         dataType: 'json',
         success: function (o) {
             var html = "";
@@ -100,25 +130,28 @@ function selectRentVehicleCustomer(o) {
 }
 
 function finishVehicleRent() {
-    if (confirm("Вы уверены в том что выдаёте ТС?")) { // TODO: выводить дополнительную информацию
+    if (confirm("Вы уверены в том что выдаёте ТС?")) {
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8000/rental_point/' + getPointId() + '/vehicle/' + selectedVehicleId + '/customer/' + selectedCustomerId,
+            url: getBaseUrl() + '/rent_point/rent' + $.param({
+                point_id: getPointIdFromSession(),
+                vehicle: selectedVehicleId,
+                customer: selectedCustomerId
+            }),
             dataType: 'json',
-            success: function(o, statusText, xhr){
+            success: function (o, statusText, xhr) {
                 if (200 == xhr.status) {
                     alert("Вы успешно выдали ТС");
+                    window.location.href = '/rent_return_vehicle';
                 } else {
                     alert("Что-то пошло не так: " + o.error);
                 }
             },
-            error: function(o) {
+            error: function (o) {
 
             }
         });
     }
-
-    //
 }
 
 function returnToVehicleSelect() {
@@ -143,22 +176,20 @@ function findVehicleToReturn() {
     var licensePlate = $('#return-license-plate').val();
     var customer = $('#return-customer').val();
 
-    if (-1 == getPointId()) {
-        // TODO: показать сообщение об ошибке. А ещё лучше - блокировать кнопку до тех пор пока не введён номер
+    if (-1 == getPointIdFromSession()) {
         alert("Недостаточно данных для выполнения запроса");
         return false;
     }
 
-    // TODO: хранить URL API в отдельном файле конфигурации
     $.ajax({
         type: "GET",
-        url: "http://localhost:8000/vehicle/return/list?" + $.param({
+        url: getBaseUrl() + '/vehicle/return?' + $.param({
             license_plate: licensePlate,
             type: vehicleType,
             vendor: vendorId,
             name: vehicleName,
             customer: customer
-        }), // TODO: передать остальные ajax-запросы на использование $.param()
+        }),
         dataType: 'json',
         success: function (o, status, xhr) {
             if ("200" != xhr.status) { // Отладить
@@ -175,7 +206,9 @@ function findVehicleToReturn() {
                         '<td>' + o[rentRecordId]['rent_time'] + '</td>' +
                         '<td>' + o[rentRecordId]['customer_name'] + '</td>' +
                         '<td>' + o[rentRecordId]['country_name'] + '</td>' +
-                        '<td><button type="button" class="btn btn-success" data-rent-record-id="' + rentRecordId + '" onclick="finishVehicleReturn(this);">Принять ТС</button>' +
+                        '<td><button type="button" class="btn btn-success" data-rent-record-id="' +
+                        rentRecordId + '" data-vehicle-id="' + o[rentRecordId]['vehicle_id'] +
+                        '" onclick="finishVehicleReturn(this);">' + findVehicleResultButtonCaption + '</button>' +
                         '</tr>'
                 }
 
@@ -189,7 +222,7 @@ function findVehicleToReturn() {
     });
 }
 
-function finishVehicleReturn(o) {
+var finishVehicleReturn = function (o) {
     var rentRecordId = $(o).data('rentRecordId');
     var type = vehicleTypeList[returnVehicleList[rentRecordId]['vehicle_type']].toLowerCase();
     var vendor = returnVehicleList[rentRecordId]['vendor_name'];
@@ -202,7 +235,10 @@ function finishVehicleReturn(o) {
 
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8000/rental_point/' + getPointId() + '/rent_record_id/' + rentRecordId,
+            url: getBaseUrl() + '/vehicle/return' + $.param({
+                point_id: getPointIdFromSession(),
+                rent_record_id: rentRecordId
+            }),
             dataType: 'json',
             success: function (o, status, xhr) {
                 if (200 == xhr.status) {
@@ -217,7 +253,7 @@ function finishVehicleReturn(o) {
             }
         });
     }
-}
+};
 
 function clearFilterVehicleSelect() {
     $('#type, #vendor').val(-1);

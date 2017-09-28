@@ -1,0 +1,120 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+    <display-name>Vehicle Rent Created Web Application</display-name>
+
+    <!-- GET: Country List -->
+    <servlet>
+        <servlet-name>countryList</servlet-name>
+        <servlet-class>com.timur.rent.CountryListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>countryList</servlet-name>
+        <url-pattern>/country/list</url-pattern>
+    </servlet-mapping>
+
+    <!-- GET: Rental Point List -->
+    <servlet>
+        <servlet-name>rentPointList</servlet-name>
+        <servlet-class>com.timur.rent.RentPointListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rentPointList</servlet-name>
+        <url-pattern>/rent_point/list</url-pattern>
+    </servlet-mapping>
+
+    <!-- GET: Vehicle Type List -->
+    <servlet>
+        <servlet-name>vehicleTypeList</servlet-name>
+        <servlet-class>com.timur.rent.VehicleTypeListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vehicleTypeList</servlet-name>
+        <url-pattern>/vehicle/type/list</url-pattern>
+    </servlet-mapping>
+
+    <!-- GET: Vehicle Vendor List -->
+    <servlet>
+        <servlet-name>vehicleVendorList</servlet-name>
+        <servlet-class>com.timur.rent.VehicleVendorListServler</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vehicleVendorList</servlet-name>
+        <url-pattern>/vehicle/vendor/list</url-pattern>
+    </servlet-mapping>
+
+    <!-- GET: Customer List -->
+    <servlet>
+        <servlet-name>customerList</servlet-name>
+        <servlet-class>com.timur.rent.CustomerListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>customerList</servlet-name>
+        <url-pattern>/customer/list</url-pattern>
+    </servlet-mapping>
+
+    <!-- GET: Vehicles available to rent -->
+    <servlet>
+        <servlet-name>availableToRentVehicleList</servlet-name>
+        <servlet-class>com.timur.rent.AvailableToRentVehicleListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>availableToRentVehicleList</servlet-name>
+        <url-pattern>/rent_point/vehicle/list</url-pattern>
+    </servlet-mapping>
+
+    <!-- POST: Rent Selected Vehicle with Selected Customer -->
+    <servlet>
+        <servlet-name>rentVehicle</servlet-name>
+        <servlet-class>com.timur.rent.RentVehicleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rentVehicle</servlet-name>
+        <url-pattern>/rent_point/rent</url-pattern>
+    </servlet-mapping>
+
+    <!--GET: Vehicles available to return -->
+    <!--POST: Return Vehicle -->
+    <servlet>
+        <servlet-name>returnVehicle</servlet-name>
+        <servlet-class>com.timur.rent.ReturnVehicleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>returnVehicle</servlet-name>
+        <url-pattern>/vehicle/return</url-pattern>
+    </servlet-mapping>
+
+    <!--GET: Rent History -->
+    <servlet>
+        <servlet-name>rentHistory</servlet-name>
+        <servlet-class>com.timur.rent.RentHistoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rentHistory</servlet-name>
+        <url-pattern>/history</url-pattern>
+    </servlet-mapping>
+
+    <!-- GET: Rent Statistics -->
+    <servlet>
+        <servlet-name>statistics</servlet-name>
+        <servlet-class>com.timur.rent.StatisticsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>statistics</servlet-name>
+        <url-pattern>/statistics</url-pattern>
+    </servlet-mapping>
+
+    <!-- GET: Track Vehicle Location -->
+    <!-- POST: Update Vehicle Location -->
+    <servlet>
+        <servlet-name>tracking</servlet-name>
+        <servlet-class>com.timur.rent.TrackingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>tracking</servlet-name>
+        <url-pattern>/tracking</url-pattern>
+    </servlet-mapping>
+
+</web-app>
