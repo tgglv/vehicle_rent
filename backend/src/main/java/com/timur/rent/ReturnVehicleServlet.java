@@ -60,9 +60,10 @@ public class ReturnVehicleServlet extends EnhancedServlet {
                 "vendor.name AS vendor_name,\n" +
                 "v.name AS vehicle_name,\n" +
                 "v.license_plate,\n" +
-                "vr.rent_time,\n" +
+                "DATE(vr.rent_time) AS rent_time,\n" +
                 "customer.name AS customer_name,\n" +
-                "country.name AS country_name\n" +
+                "country.name AS country_name,\n" +
+                "p.name AS rent_point_name \n" +
                 "FROM car_rent.rental_point p\n" +
                 "JOIN car_rent.rental_point_vehicle pv ON p.id = pv.id_rent_point\n" +
                 "JOIN car_rent.vehicle v ON pv.id_vehicle = v.id\n" +
@@ -129,6 +130,7 @@ public class ReturnVehicleServlet extends EnhancedServlet {
                     rentInfo.put("rent_time", rs.getString("rent_time"));
                     rentInfo.put("customer_name", rs.getString("customer_name"));
                     rentInfo.put("country_name", rs.getString("country_name"));
+                    rentInfo.put("rent_point_name", rs.getString("rent_point_name"));
 
                     map.put(rs.getInt("rent_record_id"), rentInfo);
                 }
@@ -307,7 +309,7 @@ public class ReturnVehicleServlet extends EnhancedServlet {
     private boolean removeVehicleFromOriginRentalPoint(ReturnModel model) {
         try {
             PreparedStatement statement = DbConnection.getInstance().getConnection().prepareStatement(
-                    "DELETE FROM car_rent.rental_point_vehicle WHERE id_rental_point = ? AND id_vehicle = ? AND available = 0"
+                    "DELETE FROM car_rent.rental_point_vehicle WHERE id_rent_point = ? AND id_vehicle = ? AND available = 0"
             );
             statement.setInt(1, model.getPreviousRentPointId());
             statement.setInt(2, model.getVehicleId());

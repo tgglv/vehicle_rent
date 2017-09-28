@@ -8,7 +8,7 @@ var mapCenterLongitude = null;
 var selectedVehicleId = null;
 var interval = null;
 
-var zoomLevel = 10;
+var zoomLevel = 12;
 
 // TODO: раз в 10 секунд запрашиваем текущее положение машины, отрисовываем новую координату на карте
 

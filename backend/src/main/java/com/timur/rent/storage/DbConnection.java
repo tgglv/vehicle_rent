@@ -1,6 +1,7 @@
 package com.timur.rent.storage;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import com.timur.rent.util.Settings;
 
 import java.sql.SQLException;
 
@@ -11,15 +12,10 @@ public class DbConnection {
     private java.sql.Connection connection = null;
 
     protected DbConnection() throws SQLException {
-        // TODO: брать URL из конфигурации
-        String url = "jdbc:mysql://localhost:3306/car_rent?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=UTF-8";
-        String username = "dev";
-        String password = "dev";
-
         MysqlDataSource dataSource = new MysqlDataSource();
-        dataSource.setUser(username);
-        dataSource.setPassword(password);
-        dataSource.setUrl(url);
+        dataSource.setUrl(Settings.getInstance().getMysqlUri());
+        dataSource.setUser(Settings.getInstance().getMysqlUsername());
+        dataSource.setPassword(Settings.getInstance().getMysqlPassword());
 
         try {
             connection = dataSource.getConnection();

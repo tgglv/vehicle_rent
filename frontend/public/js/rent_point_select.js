@@ -23,7 +23,7 @@ function onSetRentalPoint() {
     }
 
     jQuery.ajax({
-        url: '/select_rental_point/country/' + countryId + '/point/' + pointId,
+        url: '/select_rental_point/country/' + countryId + '/point/' + pointId + '?name=' + $("#point option:selected").text(),
         type: 'PUT',
         success: function() {
             window.location = '/select_rental_point';

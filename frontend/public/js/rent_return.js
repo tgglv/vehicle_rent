@@ -199,11 +199,11 @@ function findVehicleToReturn() {
                 var html = "";
                 for (var rentRecordId in o) {
                     html += '<tr data-id="' + rentRecordId + '">' +
-                        '<td>' + o[rentRecordId]['vehicle_type'] + '</td>' +
+                        '<td>' + vehicleTypeList[o[rentRecordId]['vehicle_type']] + '</td>' +
                         '<td>' + o[rentRecordId]['vendor_name'] + '</td>' +
                         '<td>' + o[rentRecordId]['vehicle_name'] + '</td>' +
                         '<td>' + o[rentRecordId]['license_plate'] + '</td>' +
-                        '<td>' + o[rentRecordId]['rent_time'] + '</td>' +
+                        '<td>' + o[rentRecordId]['rent_point_name'] + '<br/>(' + o[rentRecordId]['rent_time'] + ')</td>' +
                         '<td>' + o[rentRecordId]['customer_name'] + '</td>' +
                         '<td>' + o[rentRecordId]['country_name'] + '</td>' +
                         '<td><button type="button" class="btn btn-success" data-rent-record-id="' +

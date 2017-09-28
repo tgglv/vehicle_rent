@@ -1,4 +1,7 @@
-var baseUrl = 'http://localhost:8888/vehiclerent';
+var mode = 'DEV';
+
+var baseUrlProd = 'http://localhost:8888/vehiclerent';
+var baseUrlDev = 'http://localhost:9999';
 
 var countryList = null;
 var vehicleTypeList = null;
@@ -154,5 +157,5 @@ function onRentalPointChange() {
 }
 
 function getBaseUrl() {
-    return baseUrl;
+    return ('DEV' == mode) ? baseUrlDev : baseUrlProd;
 }

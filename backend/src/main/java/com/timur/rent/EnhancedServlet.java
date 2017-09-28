@@ -63,7 +63,7 @@ public class EnhancedServlet extends HttpServlet {
     }
 
     protected String assertSqlDate(String s) {
-        if (null == s) {
+        if (null == s || s.length() == 0) {
             return null;
         }
         Date date = null;

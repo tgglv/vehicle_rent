@@ -55,4 +55,9 @@ apk upgrade --update && \
     git clone https://github.com/tgglv/vehicle_rent.git && \
     cd /app/vehicle_rent/frontend && \
     composer install && \
+# SWITCH SOURCES TO PRODUCTION MODE
+    cd /app/vehicle_rent && \
+    sed -i "s|String.*MODE.*=.*\"DEV\";|String MODE = \"PROD\";|i" backend/src/main/java/com/timur/rent/util/Settings.java && \
+    sed -i "s|const.*MODE.*=.*'DEV';|const MODE = 'PROD';|i" frontend/cron/vehicleLocationsUpdater.php && \
+    sed -i "s|var.*mode.*=.*'DEV';|var mode = 'PROD';|i" frontend/public/js/common.js && \
     echo "BUILD DONE!"

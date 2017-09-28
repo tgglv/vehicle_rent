@@ -15,19 +15,31 @@
 
 class VehicleLocationsUpdater
 {
-    private $host = 'localhost';
-    private $port = 3306;
-    private $user = 'dev';
-    private $password = 'dev';
-    private $database = 'car_rent';
+    private $host;
+    private $port;
+    private $user;
+    private $password;
+    private $database;
+    private $baseUrl;
 
-    private $connection;
-
-    const BASE_URL = 'http://localhost:8888/vehiclerent';
+    const MODE = 'DEV';
 
     public function __construct()
     {
-        // TODO: подключить скрипт к репликации
+        $this->port = 3306;
+        $this->database = 'car_rent';
+
+        if ('DEV' === self::MODE) {
+            $this->baseUrl = 'http://localhost:9999';
+            $this->host = 't-gogolev.user';
+            $this->user = 'root';
+            $this->password = 'root';
+        } else {
+            $this->baseUrl = 'http://localhost:8888/vehiclerent';
+            $this->host = 'localhost';
+            $this->user = 'dev';
+            $this->password = 'dev';
+        }
     }
 
     public function run()
@@ -95,11 +107,8 @@ SQL;
 
         $queryResult = mysqli_query($connection, $sql, MYSQLI_ASSOC);
         if (!$queryResult) {
-
-            #debug // TODO: убрать отладку
-            var_dump(mysqli_errno($this->connection), mysqli_error($this->connection));
-            die;
-
+            // TODO: логировать на уровне INFO
+            return [];
         }
         $result = [];
         while (($row = $queryResult->fetch_assoc())) {
@@ -114,7 +123,7 @@ SQL;
 
     private function getUrl(Vehicle $vehicle)
     {
-        return self::BASE_URL . '/tracking?vehicle_id=' . $vehicle->getId();
+        return $this->baseUrl . '/tracking?vehicle_id=' . $vehicle->getId();
     }
 
     private function loadLocation(Vehicle &$vehicle)
@@ -131,11 +140,8 @@ SQL;
         $result = curl_exec($ch);
 
         if (!$result) {
-
-            #debug
-            var_dump(__FUNCTION__, __LINE__, curl_getinfo($ch));
-            die;
-
+            // TODO: логировать на уровне INFO
+            return;
         }
 
         $data = null;
@@ -145,18 +151,8 @@ SQL;
             if (JSON_ERROR_NONE != json_last_error()
                 || !isset($data[Point::LATITUDE]) || !isset($data[Point::LONGITUDE])
             ) {
-
-                # debug
-                var_dump(
-                    __FUNCTION__,
-                    __LINE__,
-                    $result,
-                    json_last_error(),
-                    json_last_error_msg(),
-                    curl_getinfo($ch, CURLINFO_HTTP_CODE)
-                );
-                die;
-
+                // TODO: логировать на уровне INFO
+                return;
             }
         } else {
             // в Redis нет данных о месте расположения ТС. Применим расположение пункта проката
@@ -176,6 +172,9 @@ SQL;
     private function changeLocation(Vehicle &$vehicle)
     {
         $point = $vehicle->getLocation();
+        if (!isset($point) || $point->undefined()) {
+            return;
+        }
 
         $point->setLatitude($this->randomize($point->getLatitude()));
         $point->setLongitude($this->randomize($point->getLongitude()));
@@ -210,11 +209,8 @@ SQL;
 
         $result = curl_exec($ch);
         if (204 != curl_getinfo($ch, CURLINFO_HTTP_CODE)) {
-
-            # debug
-            var_dump(__FUNCTION__, __LINE__, $result, curl_getinfo($ch), curl_errno($ch), curl_error($ch));
-            die;
-
+            // TODO: логировать на уровне INFO
+            return;
         }
     }
 }
@@ -311,7 +307,10 @@ class Point
         $this->longitude = $longitude;
     }
 
-
+    public function undefined()
+    {
+        return is_null($this->latitude) || is_null($this->longitude);
+    }
 }
 
 $updater = new VehicleLocationsUpdater;
