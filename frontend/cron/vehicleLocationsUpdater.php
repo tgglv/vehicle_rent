@@ -191,7 +191,7 @@ SQL;
 
     private function saveLocation(Vehicle $vehicle)
     {
-        $url = $this->getUrl($vehicle) . '?' . http_build_query(
+        $url = $this->getUrl($vehicle) . '&' . http_build_query(
                 [
                     Point::LATITUDE => $vehicle->getLocation()->getLatitude(),
                     Point::LONGITUDE => $vehicle->getLocation()->getLongitude(),

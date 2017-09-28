@@ -111,6 +111,7 @@ public class EnhancedServlet extends HttpServlet {
     }
 
     protected void setResponse(HttpServletResponse httpServletResponse, int status, String response) throws IOException {
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:9090");
         httpServletResponse.setContentType("application/json");
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setStatus(status);

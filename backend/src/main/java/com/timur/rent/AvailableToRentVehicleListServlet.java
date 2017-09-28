@@ -76,6 +76,7 @@ public class AvailableToRentVehicleListServlet extends EnhancedServlet {
                 }
 
                 setResponse(httpServletResponse, 200, new Gson().toJson(map));
+                return;
             }
 
         } catch (SQLException e) {

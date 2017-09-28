@@ -150,6 +150,7 @@ public class ReturnVehicleServlet extends EnhancedServlet {
 
         if (!searchByParam(pointId) || !searchByParam(rentRecordId)) {
             setResponse(httpServletResponse, 403, "[]");
+            return;
         }
 
         ReturnModel model = getReturnModelBy(pointId, rentRecordId);
