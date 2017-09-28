@@ -36,5 +36,3 @@ RUN /bin/sh /app/deploy.sh
 EXPOSE 8000
 # nginx
 EXPOSE 9090
-# mysql TODO: закрыть
-EXPOSE 3306
